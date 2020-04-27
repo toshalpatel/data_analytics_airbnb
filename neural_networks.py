@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 # Loading neccesary packages
 import pandas as pd
 import numpy as np
@@ -13,9 +10,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import holidays
 from datetime import timedelta
-
-
-# In[2]:
 
 
 airbnb_raw = pd.read_csv('data/Jan19-Feb20_listings_with_acessibility.csv')
@@ -420,39 +414,6 @@ for feat in significant_features_.split(','):
     
 
     
-# ## polynomial
-# svr_poly = LinearSVR()
-# svr_poly.fit(X_train, y_train)
-# poly_pred_train = svr_poly.predict(X_train)
-# poly_pred_test = svr_poly.predict(X_test)
-
-# # Printing the results
-# #print(f"Time taken to run: {round((xgb_reg_end - xgb_reg_start)/60,1)} minutes")
-# print("- Train set results:")
-# evaluate(y_train, poly_pred_train)
-# print('\n')
-# print("- Test set results:")
-# evaluate(y_test, poly_pred_test)
-
-
-# svr_poly = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,
-#                coef0=1)
-# svr_poly.fit(X_train, y_train)
-# poly_pred_train = svr_poly.predict(X_train)
-# poly_pred_test = svr_poly.predict(X_test)
-
-# # Printing the results
-# #print(f"Time taken to run: {round((xgb_reg_end - xgb_reg_start)/60,1)} minutes")
-# print("- Train set results:")
-# evaluate(y_train, poly_pred_train)
-# print('\n')
-# print("- Test set results:")
-# evaluate(y_test, poly_pred_test)
-
-# import sys
-# sys.exit()
-
-
 from keras.callbacks import ModelCheckpoint
 from keras import models, layers, optimizers, regularizers
 from keras.utils.vis_utils import model_to_dot
@@ -505,14 +466,6 @@ print(nn2.summary())
 
 
 def nn_model_evaluation(model,skip_epochs=0, X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test):
-    """
-    For a given neural network model that has already been fit, prints for the train and tests sets the MSE and r squared
-    values, a line graph of the loss in each epoch, and a scatterplot of predicted vs. actual values with a line
-    representing where predicted = actual values. Optionally, a value for skip_epoch can be provided, which skips that
-    number of epochs in the line graph of losses (useful in cases where the loss in the first epoch is orders of magnitude
-    larger than subsequent epochs). Training and test sets can also optionally be specified.
-    """
-
     # MSE and r squared values
     y_test_pred = model.predict(X_test[significant_features])
     y_train_pred = model.predict(X_train[significant_features])
@@ -556,68 +509,6 @@ import pickle
 nn2_history = pickle.load(open('trainHistoryDict', "rb"))
 nn2.load_weights('models/model.h5')
 nn_model_evaluation(nn2)
-
-import sys
-sys.exit()
-# ### SVM Regressor
-
-# In[ ]:
-
-
-import numpy as np
-from sklearn.svm import SVR
-import matplotlib.pyplot as plt
-
-# Fit regression model
-
-## radial basis function
-svr_rbf = SVR(kernel='rbf', C=100, gamma=0.1, epsilon=.1)
-svr_rbf.fit(X_train, y_train)
-rbf_pred_train = svr_rbf.predict(X_train)
-rbf_pred_test = svr_rbf.predict(X_test)
-
-# Printing the results
-print("- Train set results:")
-evaluate(y_train, rbf_pred_train)
-print('\n')
-print("- Test set results:")
-evaluate(y_test, rbf_pred_test)
-
-
-
-## linear
-svr_lin = SVR(kernel='linear', C=100, gamma='auto')
-svr_lin.fit(X_train, y_train)
-lin_pred_train = svr_lin.predict(X_train)
-lin_pred_test = svr_lin.predict(X_test)
-
-# Printing the results
-print("- Train set results:")
-evaluate(y_train, lin_pred_train)
-print('\n')
-print("- Test set results:")
-evaluate(y_test, lin_pred_test)
-
-
-
-## polynomial
-svr_poly = SVR(kernel='poly', C=100, gamma='auto', degree=3, epsilon=.1,
-               coef0=1)
-svr_poly.fit(X_train, y_train)
-poly_pred_train = svr_poly.predict(X_train)
-poly_pred_test = svr_poly.predict(X_test)
-
-# Printing the results
-#print(f"Time taken to run: {round((xgb_reg_end - xgb_reg_start)/60,1)} minutes")
-print("- Train set results:")
-evaluate(y_train, poly_pred_train)
-print('\n')
-print("- Test set results:")
-evaluate(y_test, poly_pred_test)
-
-
-# In[ ]:
-
 
 
 
